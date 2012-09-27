@@ -1,0 +1,13 @@
+{% extends "share/index_base.html" %}
+
+
+{% block content %}
+ 
+  <legend><h2> </p>{{ ad.user }} : <a href="/ads/{{ad.pk}}">{{ ad.title }} </a></h2></legend>
+<pre> {{ ad.status }} :  {{ ad.created }} : {{ ad.category }}</pre>
+<p>{{ ad.text }} </p>
+    
+<img src="{{ad.image.url }}">
+      
+{% endblock %}
+
