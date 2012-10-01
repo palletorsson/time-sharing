@@ -137,10 +137,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-
+    # thirdpartyapps
     'registration',
     'imagekit',
-
+    'south',
+    # myapps 
     'share',
     'userprofile',
 )

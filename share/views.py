@@ -10,13 +10,15 @@ from PIL import Image
 signals, profile, edit_profile, formular, list adds
 """
 
+
+"""
 def ads(request):
-    ads = Share.objects.all().order_by('-created')
+    ads = Share.objects.filter(status='A') # order_by('-created') in meta model
 
     return render_to_response('share/index.html',
                              {'ads': ads},
                              context_instance=RequestContext(request))
- 
+"""
     
 def detail(request, pk):
     ad = Share.objects.get(pk=pk)
@@ -30,11 +32,10 @@ def add_ad(request):
     if request.method == 'POST':
         form = ShareForm(request.POST, request.FILES)
         if form.is_valid():
-            """         new_ad = form.save(commit=False)
-                        new_ad.user = request.user.get_profile()
-                        new_ad.save()
-             """
-            form.save()   
+            new_ad = form.save(commit=False)
+            new_ad.user = request.user.profile
+            new_ad.status = 'A'
+            new_ad.save()               
             return HttpResponseRedirect('/ads/')
     else:
         form = ShareForm()
@@ -43,3 +44,4 @@ def add_ad(request):
         {'form': form}, 
         context_instance=RequestContext(request)
     )
+    

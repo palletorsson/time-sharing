@@ -8,7 +8,7 @@
 <h2> </p>{{ ad.user }} : <a href="./{{ad.pk}}">{{ ad.title }} </a></h2>
 <pre> {{ ad.status }} :  {{ ad.created }} : {{ ad.category }}</pre>
 <p>{{ ad.text }} </p>
-<img src="/media/{{ad.image }}" width="300">
+<a href="{%url detail_page ad.id %}"> <img src="{{ad.thumbnail.url }}" ></a>
 <hr />
     
 {% endfor %}
