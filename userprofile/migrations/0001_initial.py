@@ -11,8 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'Userprofile'
         db.create_table('userprofile_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('nick', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
+            ('nick', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('status', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('profile_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
         db.send_create_signal('userprofile', ['Userprofile'])
 
@@ -62,8 +64,10 @@ class Migration(SchemaMigration):
         'userprofile.userprofile': {
             'Meta': {'object_name': 'Userprofile'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nick': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'nick': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'profile_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': "orm['auth.User']"})
         }
     }
 

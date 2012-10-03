@@ -20,17 +20,25 @@ def ads(request):
 """
     
 def detail(request, pk):
+    
     try:
         ad = Share.objects.get(pk=pk)
-    except Ad.DoesNotExist:
+    except:
         return HttpResponse(404)
         # return HttpResponseRedirect('/add_does_not_exist/')
         # return redirect('detail')
 
-    return render('share/detail.html', {'ad': ad},)
+    return render_to_response('share/detail.html', {'ad': ad},
+                              context_instance=RequestContext(request)
+                              )
 
 @login_required
 def add_ad(request):
+    """
+    >>> a = 'a'
+    >>> a
+    a
+    """
     if request.method == 'POST':
         form = ShareForm(request.POST, request.FILES)
         if form.is_valid():

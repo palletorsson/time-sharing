@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Share'
         db.create_table('share_share', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=40)),
             ('text', self.gf('django.db.models.fields.TextField')()),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['share.Category'])),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['userprofile.Userprofile'])),
@@ -89,14 +89,16 @@ class Migration(SchemaMigration):
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
             'text': ('django.db.models.fields.TextField', [], {}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['userprofile.Userprofile']"})
         },
         'userprofile.userprofile': {
             'Meta': {'object_name': 'Userprofile'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nick': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'nick': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'profile_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': "orm['auth.User']"})
         }
     }
 

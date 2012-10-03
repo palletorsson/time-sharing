@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from models import Userprofile
 from django.contrib.auth.decorators import login_required
-from models import Userprofile
 from forms import UserprofileForm
 from PIL import Image
 
@@ -10,6 +10,8 @@ from PIL import Image
 def view_profile(request):
     """
     signals, profile, edit_profile, formular, list adds
+
+    
     """
 
     user = Userprofile.objects.get(id = request.user.id)
@@ -22,9 +24,8 @@ def view_profile(request):
                               },
                              context_instance=RequestContext(request))
 
-
 @login_required
-def edit(request, id=None, template_name='userprofile/edit_user.html'):
+def edit(request, id):
     userprofile = Userprofile.objects.get(id = request.user.id)
     #u = user.user
     if request.method == 'POST':
@@ -33,11 +34,10 @@ def edit(request, id=None, template_name='userprofile/edit_user.html'):
             edit_user = form.save(commit=False)
             edit_user.user = request.user
             edit_user.save()
-            return HttpResponseRedirect('accounts/profile/')
-
+            return HttpResponseRedirect('/accounts/profile/')
     else:
         form = UserprofileForm(instance=userprofile)
 
-    return render_to_response(template_name, {
+    return render_to_response('userprofile/edit_user.html', {
         'form': form,
     }, context_instance=RequestContext(request))

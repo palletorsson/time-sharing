@@ -1,13 +1,20 @@
 from django.db import models
 from userprofile.models import Userprofile
-from datetime import datetime
+from datetime import datetime, timedelta
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill, Adjust
+
 
 STATUS = (
     ('A', 'Active'),
     ('E', 'Expired'),
 )
+
+class TopShare(models.Manager):
+    def last_list(self):
+        ad = Share.objects.all().order_by('-created')[:2]
+        return ad
+    # can be user like Share.objects.topshare()
 
 class Share(models.Model):
     """
@@ -16,10 +23,11 @@ class Share(models.Model):
     >>> s = Share()
     >>> s.title = 'Foo'
     >>> s.text = 'foo text'
-    >>> s.user = Userprofile.objects.get(user=1)
-    >>> s.category = Category.objects.get(name=1)
+    >>> s.category = Category.objects.create(name = 'maskar')
     >>> print s.text
     foo text
+    >>> print s.title
+    Foo
     """
     
     title = models.CharField(max_length=40)
@@ -36,12 +44,30 @@ class Share(models.Model):
     thumbnail = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1),
         ResizeToFill(50, 50)], image_field='image',
         format='JPEG', options={'quality': 90})
+    objects = TopShare()
 
+    """
+        
+    def second_to_finish():
+        created = created
+        now = timedelta(microseconds=-1)
+        now_s = now.seconds
+        end = now_s
+        
+    
+    
+    def get_last():
+        ad = Share.objects.all()order_by('-created')[:2]
+        return ad
+    """
+    
+                 
     def __unicode__(self):
         return unicode(self.user) + " : " + unicode(self.title)
     
+    
     class Meta:
-        ordering = ['-created']
+        ordering = ['-created', ]
                      
 
 class Category(models.Model):
@@ -49,6 +75,9 @@ class Category(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+    
+    
     
 """
 user = models.ForeignKey(Userprofile, relate_name='ads')
