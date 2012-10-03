@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     
     url(r'^accounts/profile/', include('userprofile.urls')),
         
+    url(r'^profile/', include('userprofile.urls')),
+    
     url(r'^accounts/', include('registration.backends.default.urls')), 
 
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

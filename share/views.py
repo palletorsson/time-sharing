@@ -1,5 +1,5 @@
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response, Http404, HttpResponse, render 
+from django.http import HttpResponseRedirect   # get_object_or_404, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from models import Share
@@ -14,18 +14,20 @@ signals, profile, edit_profile, formular, list adds
 """
 def ads(request):
     ads = Share.objects.filter(status='A') # order_by('-created') in meta model
-
     return render_to_response('share/index.html',
                              {'ads': ads},
                              context_instance=RequestContext(request))
 """
     
 def detail(request, pk):
-    ad = Share.objects.get(pk=pk)
-    
-    return render_to_response('share/detail.html',
-                             {'ad': ad},
-                             context_instance=RequestContext(request))
+    try:
+        ad = Share.objects.get(pk=pk)
+    except Ad.DoesNotExist:
+        return HttpResponse(404)
+        # return HttpResponseRedirect('/add_does_not_exist/')
+        # return redirect('detail')
+
+    return render('share/detail.html', {'ad': ad},)
 
 @login_required
 def add_ad(request):

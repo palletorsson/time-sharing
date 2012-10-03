@@ -51,6 +51,10 @@
             <li class="">
                     <a href="/accounts/profile/">{{ request.user.username }}</a>
               </li>
+            
+            <li class="">
+                    <a href="/profile/edit/{{ user.id }}">edit profile</a>
+              </li>
                 {% else %}
                     <a href="/accounts/login/">Please log in </a>
                 {% endif %}

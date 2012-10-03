@@ -13,6 +13,7 @@ class Userprofile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     nick = models.CharField(max_length=50)
     status = models.IntegerField(default=0, choices=STATUS)
+    profile_image = models.ImageField(upload_to = 'profile_image/')
  
     def __unicode__(self):
         return unicode(self.user)
