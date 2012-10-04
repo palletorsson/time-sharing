@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <legend>Userprofile</legend>
+    <h2> {{ user.user}}  {{ user.nick }}  </h2>
+    {%if user.profile_image %}
+        <img src="{{ user.profile_image.url  }}" width="200" />
+    {%else%}
+        There is no profile image.
+    {%endif%}
+    <h3>Your ads</h3>
+    {% for ad in user_adds %}
+        <h2><a href="{%url detail_page ad.id %}">{{ ad.title }} </a></h2>
+        <a href="/ads/delete/{{ad.pk}}"> Delete this ad</a>
+        <a href="/ads/edit/{{ad.pk}}"> || Edit this ad</a>
+        <pre> {{ ad.status }} :  {{ ad.created }} : {{ ad.category }}</pre>
+        <p>{{ad.text}}</p>
+        {%if ad.thumbnail%}
+            <img src="{{ad.thumbnail.url }}" >
+        {%endif%}                
+        <hr />
+    {% endfor %}    
+    <hr />
+{% endblock %}
+

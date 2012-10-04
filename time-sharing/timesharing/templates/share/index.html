@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <legend>Ads</legend>
+    {% for ad in ads %}
+        <h2> {{ ad.user }} : <a href="{%url detail_page ad.id %}">{{ ad.title }} </a></h2>
+        <pre> {{ ad.status }} :  {{ ad.created }} : {{ ad.category }}</pre>
+        <p>{{ ad.text }} </p>
+        {%if ad.thumbnail%}
+            <a href="{%url detail_page ad.id %}">
+            <img src="{{ad.thumbnail.url }}" >
+            </a>
+        {%endif%}                
+        <hr />
+    {% endfor %}
+{% endblock %}
+
